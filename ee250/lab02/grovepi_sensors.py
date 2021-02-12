@@ -32,20 +32,28 @@ if __name__ == '__main__':
     potentio = 0 # rotary angle sensor is connected to A0
 
     while True:
-        #So we do not poll the sensors too quickly which may introduce noise,
-        #sleep for a reasonable time of 200ms between each iteration.
-        time.sleep(0.2)
+        try:
+            #So we do not poll the sensors too quickly which may introduce noise,
+            #sleep for a reasonable time of 200ms between each iteration.
+            time.sleep(0.2)
 
-	#read values from sensors
-	ultra_val=grovepi.ultrasonicRead(ultra)
-	potentio_val=grovepi.analogRead(potentio)
+	    #read values from sensors
+	    ultra_val=grovepi.ultrasonicRead(ultra)
+	    potentio_val=grovepi.analogRead(potentio)
 
         
-	#print in terminal
-	print(ultra_val)
-	print(potentio_val)
+	    #print in terminal
+	    print(ultra_val)
+	    print(potentio_val)
 
-	if ultra_val < potentio_val:
-	    setText(potentio_val + "cm OBJ PRES" + "/n" + ultra_val + "cm")
-	else:
-	    setText(potentio_val + "cm " + "/n" + ultra_val + "cm")
+	    #convert to string to accomodate settext
+	    ultra_str=str(ultra_val)
+	    potentio_str=str(potentio_val)
+
+	    if ultra_val < potentio_val:
+	        setText_norefresh(potentio_str + "cm OBJ PRES" + "/n" + ultra_str + "cm")
+	    elif:
+	        setText_norefresh(potentio_str + "cm " + "/n" + ultra_str + "cm")
+
+	except (TypeError, IOError) as err: #exception
+	    print "Error"

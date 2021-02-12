@@ -1,8 +1,8 @@
 """ EE 250L Lab 02: GrovePi Sensors
 
-List team members here.
+List team members here. Grace Zhang
 
-Insert Github repository link here.
+Insert Github repository link here. https://github.com/usc-ee250-spring2021/lab02-TheAstralClocktower/tree/lab02
 """
 
 """python3 interpreters in Ubuntu (and other linux distros) will look in a 
@@ -28,11 +28,24 @@ import grovepi
 is, if you run `python3 grovepi_sensors.py` in terminal, this if-statement will 
 be true"""
 if __name__ == '__main__':
-    PORT = 4    # D4
+    ultra = 4    # ultrasonic sensor is connected to D4
+    potentio = 0 # rotary angle sensor is connected to A0
 
     while True:
         #So we do not poll the sensors too quickly which may introduce noise,
         #sleep for a reasonable time of 200ms between each iteration.
         time.sleep(0.2)
 
-        print(grovepi.ultrasonicRead(PORT))
+	#read values from sensors
+	ultra_val=grovepi.ultrasonicRead(ultra)
+	potentio_val=grovepi.analogRead(potentio)
+
+        
+	#print in terminal
+	print(ultra_val)
+	print(potentio_val)
+
+	if ultra_val < potentio_val:
+	    setText(potentio_val + "cm OBJ PRES" + "/n" + ultra_val + "cm")
+	else:
+	    setText(potentio_val + "cm " + "/n" + ultra_val + "cm")
